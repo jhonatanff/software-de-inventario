@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Interfaz de Inicio</title>
+<style>
+  body {
+    font-family: Arial, sans-serif;
+    background-color: #f0f0f0;
+    margin: 0;
+    padding: 0;
+  }
+
+  .container {
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    height: 555px;
+  }
+  button {
+    padding: 10px 20px;
+    margin: 10px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  .texto-superior {
+    margin-top: 20px;
+  }
+  .texto-inferior {
+    margin-top: 50px;
+  }
+  .mision-vision {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 60px;
+  }
+  .btnUser{
+    position:left;
+    display: flex;
+    padding: 5px;
+    margin-left: 20px;
+    width: 30px;
+    
+  }
+ .prueba {
+    padding: 1.5%;
+    text-align: center;
+    height: 80%;
+ }
+
+      #btnuser {
+        transition: 0.5s;
+        cursor: pointer;
+      }
+      #btnuser:hover {
+        transform: scale(1.4);
+      }
+</style>
+</head>
+<body>
+<div class="prueba">
+<div class="container">
+  <div class="btnUser">
+    <svg xmlns="http://www.w3.org/2000/svg" id="btnuser" href="iniciar sesion.html" width="30" height="30" fill="currentColor" class="bi bi-box-arrow-left" viewBox="0 0 16 16" >
+      <path fill-rule="evenodd" d="M6 12.5a.5.5 0 0 0 .5.5h8a.5.5 0 0 0 .5-.5v-9a.5.5 0 0 0-.5-.5h-8a.5.5 0 0 0-.5.5v2a.5.5 0 0 1-1 0v-2A1.5 1.5 0 0 1 6.5 2h8A1.5 1.5 0 0 1 16 3.5v9a1.5 1.5 0 0 1-1.5 1.5h-8A1.5 1.5 0 0 1 5 12.5v-2a.5.5 0 0 1 1 0z"/>
+      <path fill-rule="evenodd" d="M.146 8.354a.5.5 0 0 1 0-.708l3-3a.5.5 0 1 1 .708.708L1.707 7.5H10.5a.5.5 0 0 1 0 1H1.707l2.147 2.146a.5.5 0 0 1-.708.708z"/>
+    </svg>
+  </div>
+    <center><h1>Software de Inventario </h1></center>
+  <button ><a href="inventario.html" style="text-decoration: none; color: white;" >Inventario</button></a>
+  <button><a href="productos.html" style="text-decoration: none; color: white;">Productos</button></a>
+  <button><a href="despachos.html" style="text-decoration: none; color: white;">Despachos</button></a>
+  <button><a href="ingreso_mercancia.html" style="text-decoration: none; color: white;">Ingreso de Mercancía</button></a>
+  <button><a href="gestion_provedor.html" style="text-decoration: none; color: white;">Gestion de proveedores</a></button>
+  <div class="texto-inferior">
+    <p>Para hacer uso de las funciones de nuestra pagina web, debes seleccionar cualquier opcion que esta en la parte superior.</p>
+  </div>
+  <div class="mision-vision">
+    <div>
+      <h3>Misión</h3>
+      <p >Nuestra mision es optimizar el software de inventario 
+        para aumentar la eficiencia y precision en la gestion de productos.</p>
+    </div>
+    <div>
+      <h3>Visión</h3>
+      <p>Para el año 2026 seremos lideres en software de inventario para micro empresas, ofreciendo soluciones eficientes y confiable
+         que impulsen el crecimiento y el exito.</p>
+    </div>
+  </div>
+</div>
+</div>
+<script>
+  // Función para retroceder en la historia del navegador al hacer clic en el icono
+  document.getElementById("btnuser").addEventListener("click", function () {
+        window.location.href = "page_principal.html";
+      });
+</script>
+</body>
+</html>
