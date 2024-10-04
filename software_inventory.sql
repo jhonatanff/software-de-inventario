@@ -2,6 +2,9 @@
 -- version 5.2.1
 -- https://www.phpmyadmin.net/
 --
+-- fecha de modificacion 05/10/2024 - 10:52 a.m
+-- user: localhost
+-- password: 
 -- Servidor: 127.0.0.1
 -- Tiempo de generación: 05-10-2024 a las 01:43:26
 -- Versión del servidor: 10.4.32-MariaDB
