@@ -2,7 +2,8 @@
     include 'conexion.php';
 
     if($conn -> connect_error){
-        die("Conexion fallida: ". $conn->connect_error);
+        //die("Conexion fallida: ". $conn->connect_error);
+        header("location: http://localhost/programacion/configuracion/error404.php");
     }
     $nombre_apellido = $_POST['nombre'];
     $email = $_POST['email'];

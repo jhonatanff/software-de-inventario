@@ -9,7 +9,8 @@ $conn = new mysqli($servername, $username, $password, $dbname);
 
 // Verificar conexión
 if ($conn->connect_error) {
-    die("Conexión fallida: " . $conn->connect_error);
+    //die("Conexión fallida: " . $conn->connect_error);
+    header("location: http://localhost/programacion/configuracion/error404.php");
 }
 
 // Verificar si los datos del formulario están presentes
