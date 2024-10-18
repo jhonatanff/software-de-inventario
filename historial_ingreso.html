@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Historial de Mercancia</title>
+    <link
+      href="vendor/fontawesome-free/css/all.min.css"
+      rel="stylesheet"
+      type="text/css"
+    />
+    <link
+      href="https://cdn.datatables.net/1.11.5/css/jquery.dataTables.min.css"
+      rel="stylesheet"
+      type="text/css"
+    />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD"
+      crossorigin="anonymous"
+    />
+    <link
+      href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
+      rel="stylesheet"
+    />
+    <link href="css/sb-admin-2.min.css" rel="stylesheet" />
+    <style>
+      .container {
+        max-width: 1200px;
+        margin: 20px auto;
+        padding: 20px;
+        background-color: #fff;
+        border-radius: 5px;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+      }
+      #btnuser {
+        transition: 0.5s;
+        cursor: pointer;
+      }
+      #btnuser:hover {
+        transform: scale(1.4);
+      }
+      .search-container {
+        display: flex;
+        align-items: center;
+        margin-top: 40px;
+        margin-left: 50.5rem;
+      }
+      .search-input {
+        border: 1px solid #ccc;
+        border-radius: 5px 0 0 5px;
+        padding: 8px;
+        font-size: 16px;
+        width: 250px;
+      }
+      .search-button {
+        background-color: #4caf50;
+        color: white;
+        border: none;
+        border-radius: 0 5px 5px 0;
+        padding: 8px 16px;
+        font-size: 16px;
+        cursor: pointer;
+      }
+      .search-button:hover {
+        background-color: #45a049;
+      }
+      #prev {
+        background-color: #18d6e8;
+        border: none;
+        font-size: 18px;
+        border-radius: 5px; /* Optional: to add rounded corners */
+        padding: 8px 15px;
+      }
+      #next {
+        background-color: #18d6e8;
+        border: none;
+        font-size: 18px;
+        border-radius: 5px; /* Optional: to add rounded corners */
+        padding: 8px 5px;
+      }
+      #pagination {
+        margin-left: 53rem;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div class="btn.retroceder">
+        <svg
+          id="btnuser"
+          xmlns="http://www.w3.org/2000/svg"
+          width="30"
+          height="30"
+          fill="currentColor"
+          class="bi bi-arrow-left-circle-fill"
+          viewBox="0 0 16 16"
+        >
+          <path
+            d="M8 0a8 8 0 1 0 0 16A8 8 0 0 0 8 0m3.5 7.5a.5.5 0 0 1 0 1H5.707l2.147 2.146a.5.5 0 0 1-.708.708l-3-3a.5.5 0 0 1 0-.708l3-3a.5.5 0 1 1 .708.708L5.707 7.5z"
+          />
+        </svg>
+      </div>
+      <center>
+        <h1
+          style="
+            color: black;
+            font-family: Georgia, 'Times New Roman', Times, serif;
+          "
+        >
+          Historial de Mercancia
+        </h1>
+      </center>
+      <div class="search-container">
+        <input
+          type="text"
+          id="search-input"
+          class="search-input"
+          placeholder="Ingresar codigo..."
+        />
+        <button
+          type="button"
+          id="search-button"
+          class="search-button"
+          onclick="search()"
+        >
+          Buscar
+        </button>
+      </div>
+      <div class="card-body">
+        <div class="table-responsive">
+          <table
+            class="table table-bordered"
+            id="dataTable"
+            width="100%"
+            cellspacing="0"
+          >
+            <thead>
+              <tr>
+                <th>Codigo</th>
+                <th>Nombre</th>
+                <th>Proveedor</th>
+                <th>Cantidad</th>
+                <th>Precio Unitario</th>
+                <th>Estado Almacen</th>
+                <th>Descripcion</th>
+                <th>Fecha Ingreso</th>
+                <th>Bodega</th>
+              </tr>
+            </thead>
+            <tfoot>
+              <tr>
+                <th>Codigo</th>
+                <th>Nombre</th>
+                <th>Proveedor</th>
+                <th>Cantidad</th>
+                <th>Precio Unitario</th>
+                <th>Estado Almacen</th>
+                <th>Descripcion</th>
+                <th>Fecha Ingreso</th>
+                <th>Bodega</th>
+              </tr>
+            </tfoot>
+            <tbody>
+              <!-- Los datos se agregarán aquí dinámicamente -->
+            </tbody>
+          </table>
+          <div id="pagination">
+            <button id="prev" disabled>Atrás</button>
+            <span id="page-info"></span>
+            <button id="next">Siguiente</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+      crossorigin="anonymous"
+    ></script>
+    <script>
+      // Función para retroceder en la historia del navegador al hacer clic en el icono
+      document.getElementById("btnuser").addEventListener("click", function () {
+        window.history.back();
+      });
+
+      // Función para cargar los datos dinámicamente desde la base de datos
+      function loadData() {
+        $.ajax({
+          type: "POST",
+          url: "Backend_Imercancia/get_data1.php",
+          dataType: "json",
+          success: function (response) {
+            if (response.status === "success") {
+              var tableBody = $("#dataTable tbody");
+              tableBody.empty(); // Limpiar la tabla antes de agregar nuevos datos
+              response.data.forEach(function (data) {
+                var newRow =
+                  "<tr>" +
+                  "<td>" +
+                  data.codigo +
+                  "</td>" +
+                  "<td>" +
+                  data.nombre +
+                  "</td>" +
+                  "<td>" +
+                  data.proveedor +
+                  "</td>" +
+                  "<td>" +
+                  data.cantidad +
+                  "</td>" +
+                  "<td>" +
+                  data.precio_unitario +
+                  "</td>" +
+                  "<td>" +
+                  data.estado_almacen +
+                  "</td>" +
+                  "<td>" +
+                  data.descripcion +
+                  "</td>" +
+                  "<td>" +
+                  data.fecha_ingreso +
+                  "</td>" +
+                  "<td>" +
+                  data.bodega +
+                  "</td>" +
+                  "</tr>";
+                tableBody.append(newRow);
+              });
+            } else {
+              alert(response.message);
+            }
+          },
+          error: function (xhr, status, error) {
+            alert("Error: " + error);
+          },
+        });
+      }
+      // Buscar historial por cedula
+      function search() {
+        var input = document.getElementById("search-input").value.toLowerCase();
+        var table = document.getElementById("dataTable");
+        var tr = table.getElementsByTagName("tr");
+        for (var i = 1; i < tr.length; i++) {
+          // i = 1 to skip the header row
+          var td = tr[i].getElementsByTagName("td")[0];
+          if (td) {
+            var txtValue = td.textContent || td.innerText;
+            if (txtValue.toLowerCase().indexOf(input) > -1) {
+              tr[i].style.display = "";
+            } else {
+              tr[i].style.display = "none";
+            }
+          }
+        }
+      }
+
+      // DESLOGACION DE PAGINA DE DATOS DEL HISTORIAL
+      $(document).ready(function () {
+        const rowsPerPage = 3;
+        let currentPage = 1;
+        let totalPages = 1;
+        let dataCache = [];
+        function renderTablePage(data, page) {
+          const startIndex = (page - 1) * rowsPerPage;
+          const endIndex = startIndex + rowsPerPage;
+          const pageData = data.slice(startIndex, endIndex);
+          const tableBody = $("#dataTable tbody");
+          tableBody.empty(); // Limpiar la tabla antes de agregar nuevos datos
+          pageData.forEach(function (data) {
+            var newRow =
+              `<tr data-codigo="${data.codigo}">` +
+              `<td>${data.codigo}</td>` +
+              `<td>${data.nombre}</td>` +
+              `<td>${data.proveedor}</td>` +
+              `<td>${data.cantidad}</td>` +
+              `<td>${data.precio_unitario}</td>` +
+              `<td>${data.estado_almacen}</td>` +
+              `<td>${data.descripcion}</td>` +
+              `<td>${data.fecha_ingreso}</td>` +
+              `<td>${data.bodega}</td>` +
+              `</tr>`;
+            tableBody.append(newRow);
+          });
+
+          // Actualizar información de la página
+          $("#page-info").text(`Página ${currentPage} de ${totalPages}`);
+          $("#prev").prop("disabled", currentPage === 1);
+          $("#next").prop("disabled", currentPage === totalPages);
+        }
+        function loadData() {
+          $.ajax({
+            type: "POST",
+            url: "Backend_Imercancia/get_data.php",
+            dataType: "json",
+            success: function (response) {
+              if (response.status === "success") {
+                dataCache = response.data;
+                totalPages = Math.ceil(dataCache.length / rowsPerPage);
+                renderTablePage(dataCache, currentPage);
+              } else {
+                alert(response.message);
+              }
+            },
+            error: function (xhr, status, error) {
+              alert("Error: " + error);
+            },
+          });
+        }
+        // Cargar los datos al cargar la página
+        loadData();
+
+        // Delegación de eventos para los botones de paginación
+        $("#prev").click(function () {
+          if (currentPage > 1) {
+            currentPage--;
+            renderTablePage(dataCache, currentPage);
+          }
+        });
+        $("#next").click(function () {
+          if (currentPage < totalPages) {
+            currentPage++;
+            renderTablePage(dataCache, currentPage);
+          }
+        });
+
+        // Delegación de eventos para los botones de edición dinámicos
+        $(document).on("click", ".editar-btn", function () {
+          const modalEditarHistorial = new bootstrap.Modal(
+            document.getElementById("edtitarhistorial")
+          );
+          modalEditarHistorial.show();
+        });
+
+        // Delegación de eventos para los botones de eliminar dinámicos
+        $(document).on("click", ".eliminar-btn", function () {
+          var codigo = $(this).closest("tr").find("td:first").text();
+          var fila = $(this).closest("tr");
+          $.ajax({
+            type: "post",
+            url: "Backend_despachos/eliminar.php",
+            data: { cedula: cedula },
+            dataType: "json",
+            success: function (response) {
+              if (response.status === "success") {
+                fila.remove();
+                alert(response.message);
+                // Actualizar la caché de datos y la tabla
+                dataCache = dataCache.filter((item) => item.cedula !== cedula);
+                totalPages = Math.ceil(dataCache.length / rowsPerPage);
+                if (currentPage > totalPages) currentPage = totalPages;
+                renderTablePage(dataCache, currentPage);
+              } else {
+                alert(response.message);
+              }
+            },
+            error: function (xhr, status, error) {
+              alert("Error: " + error);
+            },
+          });
+        });
+      });
+    </script>
+
+    <link
+      href="https://cdn.datatables.net/1.11.5/css/jquery.dataTables.min.css"
+      rel="stylesheet"
+      type="text/css"
+    />
+    <script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD"
+      crossorigin="anonymous"
+    ></script>
+  </body>
+</html>
